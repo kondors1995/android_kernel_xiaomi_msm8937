@@ -117,7 +117,8 @@ choice
 		  as desired, independently of the disk parameters and with
 		  any workload. It also tries to guarantee low latency to
 		  interactive and soft real-time applications.
-    config DEFAULT_FIOPS
+
+  config DEFAULT_FIOPS
 		bool "FIOPS" if IOSCHED_FIOPS=y
 
 	config DEFAULT_ZEN
