@@ -93,5 +93,7 @@ obj-$(CONFIG_TOUCHSCREEN_SYNAPTICS_DSX_FW_UPDATE) 	+= synaptics_fw_update.o
 obj-$(CONFIG_TOUCHSCREEN_GT9XX)		+= gt9xx/
 obj-$(CONFIG_TOUCHSCREEN_FT5336)	+= FT5336/
 obj-$(CONFIG_TOUCHSCREEN_IST30XX)	+= IST30xx/
+obj-$(CONFIG_SWEEP2SLEEP)               += sweep2sleep.o
 
 ccflags-y := -Ofast
+

@@ -1136,5 +1136,10 @@ config TOUCHSCREEN_IST30XX
 	bool "IMAGES touchpanel IST30XX series"
 	depends on I2C
 
+config TOUCHSCREEN_SWEEP2SLEEP
+	bool "Enable kernel support for Sweep2Sleep"
+	default n
+
 source "drivers/input/touchscreen/IST30xx/Kconfig"
 endif
+
