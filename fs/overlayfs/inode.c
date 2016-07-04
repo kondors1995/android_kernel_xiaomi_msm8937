@@ -52,6 +52,10 @@ int ovl_setattr(struct dentry *dentry, struct iattr *attr)
 	upperdentry = ovl_dentry_upper(dentry);
 	if (upperdentry) {
 		mutex_lock(&upperdentry->d_inode->i_mutex);
+
+		if (attr->ia_valid & (ATTR_KILL_SUID|ATTR_KILL_SGID))
+			attr->ia_valid &= ~ATTR_MODE;
+
 		err = notify_change(upperdentry, attr, NULL);
 		mutex_unlock(&upperdentry->d_inode->i_mutex);
 	} else {
