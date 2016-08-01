@@ -39,6 +39,9 @@ static unsigned int max_freq_hardlimit[2] = {0, 0};
 #define CONFIG_MSM_CPU_FREQ_MIN_GROUP2 768000
 #define CONFIG_MSM_CPU_FREQ_MAX_GROUP2 1401000
 
+#define GOVERNOR_NAME_MAX	16
+static char governor_hard[2][GOVERNOR_NAME_MAX];
+
 /**
  * The "cpufreq driver" - the arch- or hardware-dependent low
  * level driver of CPUFreq support, and its spinlock. This lock
@@ -601,6 +604,28 @@ static ssize_t store_##file_name					\
 // store_one(scaling_min_freq, min);
 // store_one(scaling_max_freq, max);
 
+
+/**
+ * show_scaling_governor_hard - scaling governor hard lock
+ */
+static ssize_t show_scaling_governor_hard(struct cpufreq_policy *policy, char *buf)
+{							\
+	return sprintf(buf, "%s\n", governor_hard[map_core_to_cluster(policy->cpu)]);
+}
+
+
+/**
+ * store_scaling_governor_hard - scaling governor hard lock
+ */
+static ssize_t store_scaling_governor_hard(struct cpufreq_policy *policy, const char *buf, size_t count)
+{
+	if (strlen(buf) < GOVERNOR_NAME_MAX)
+		sscanf(buf, "%s", governor_hard[map_core_to_cluster(policy->cpu)]);
+
+	return count;
+}
+
+
 /**
  * show_scaling_min_freq_hardlimit - minimum scaling frequency hard limit 
  */
@@ -819,6 +844,14 @@ static ssize_t store_scaling_governor(struct cpufreq_policy *policy,
 	if (ret != 1)
 		return -EINVAL;
 
+	// if hard limit for governor is set, only allow this governor to be set
+	if ((strlen(governor_hard[map_core_to_cluster(policy->cpu)]) != 0) &&
+		(! strstr(str_governor, governor_hard[map_core_to_cluster(policy->cpu)])))
+	{
+		printk(KERN_ERR "scaling governor: switch to %s failed due to Boeffla hard value set to %s\n", str_governor, governor_hard[policy->cpu]);
+		return -EINVAL;
+	}
+
 	if (cpufreq_parse_governor(str_governor, &new_policy.policy,
 						&new_policy.governor))
 		return -EINVAL;
@@ -957,6 +990,7 @@ cpufreq_freq_attr_rw(scaling_min_freq_hardlimit);
 cpufreq_freq_attr_rw(scaling_max_freq);
 cpufreq_freq_attr_rw(scaling_max_freq_hardlimit);
 cpufreq_freq_attr_rw(scaling_governor);
+cpufreq_freq_attr_rw(scaling_governor_hard);
 cpufreq_freq_attr_rw(scaling_setspeed);
 
 static struct attribute *default_attrs[] = {
@@ -970,6 +1004,7 @@ static struct attribute *default_attrs[] = {
 	&affected_cpus.attr,
 	&related_cpus.attr,
 	&scaling_governor.attr,
+	&scaling_governor_hard.attr,
 	&scaling_driver.attr,
 	&scaling_available_governors.attr,
 	&scaling_setspeed.attr,
@@ -2769,6 +2804,10 @@ int cpufreq_register_driver(struct cpufreq_driver *driver_data)
 	max_freq_hardlimit[0] = CONFIG_MSM_CPU_FREQ_MAX_GROUP1;
 	min_freq_hardlimit[1] = CONFIG_MSM_CPU_FREQ_MIN_GROUP2;
 	max_freq_hardlimit[1] = CONFIG_MSM_CPU_FREQ_MAX_GROUP2;
+
+	// Initialize governor hard limits
+	sprintf(governor_hard[0], "%s", "");
+	sprintf(governor_hard[1], "%s", "");
 
 	return 0;
 err_if_unreg:
