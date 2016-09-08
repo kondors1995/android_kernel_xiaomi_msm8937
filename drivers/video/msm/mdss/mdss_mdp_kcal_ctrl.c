@@ -249,7 +249,7 @@ static void mdss_mdp_kcal_update_pa(struct kcal_lut_data *lut_data)
 		mdss_mdp_pa_config(fb0_ctl->mfd, &pa_config, &copyback);
 	} else {
 		memset(&pa_v2_config, 0, sizeof(struct mdp_pa_v2_cfg_data));
-		
+
 		pa_v2_config.version = mdp_pa_v1_7;
 		pa_v2_config.block = MDP_LOGICAL_BLOCK_DISP_0;
 		pa_v2_config.pa_v2_data.flags = lut_data->enable ?
@@ -531,9 +531,9 @@ static ssize_t kcal_cont_show(struct device *dev,
 
 static DEVICE_ATTR(kcal, S_IWUSR | S_IRUGO, kcal_show, kcal_store);
 static DEVICE_ATTR(kcal_min, S_IWUSR | S_IRUGO, kcal_min_show, kcal_min_store);
-static DEVICE_ATTR(kcal_enable, S_IWUSR | S_IRUGO, kcal_enable_show,
+static DEVICE_ATTR(kcal_enable_obsolete, S_IWUSR | S_IRUGO, kcal_enable_show,
 	kcal_enable_store);
-static DEVICE_ATTR(kcal_invert_dont_use, S_IWUSR | S_IRUGO, kcal_invert_show,
+static DEVICE_ATTR(kcal_invert_obsolete, S_IWUSR | S_IRUGO, kcal_invert_show,
 	kcal_invert_store);
 static DEVICE_ATTR(kcal_sat, S_IWUSR | S_IRUGO, kcal_sat_show, kcal_sat_store);
 static DEVICE_ATTR(kcal_hue, S_IWUSR | S_IRUGO, kcal_hue_show, kcal_hue_store);
@@ -573,8 +573,8 @@ static int kcal_ctrl_probe(struct platform_device *pdev)
 
 	ret = device_create_file(&pdev->dev, &dev_attr_kcal);
 	ret |= device_create_file(&pdev->dev, &dev_attr_kcal_min);
-	ret |= device_create_file(&pdev->dev, &dev_attr_kcal_enable);
-	ret |= device_create_file(&pdev->dev, &dev_attr_kcal_invert_dont_use);
+	ret |= device_create_file(&pdev->dev, &dev_attr_kcal_enable_obsolete);
+	ret |= device_create_file(&pdev->dev, &dev_attr_kcal_invert_obsolete);
 	ret |= device_create_file(&pdev->dev, &dev_attr_kcal_sat);
 	ret |= device_create_file(&pdev->dev, &dev_attr_kcal_hue);
 	ret |= device_create_file(&pdev->dev, &dev_attr_kcal_val);
@@ -591,8 +591,8 @@ static int kcal_ctrl_remove(struct platform_device *pdev)
 {
 	device_remove_file(&pdev->dev, &dev_attr_kcal);
 	device_remove_file(&pdev->dev, &dev_attr_kcal_min);
-	device_remove_file(&pdev->dev, &dev_attr_kcal_enable);
-	device_remove_file(&pdev->dev, &dev_attr_kcal_invert_dont_use);
+	device_remove_file(&pdev->dev, &dev_attr_kcal_enable_obsolete);
+	device_remove_file(&pdev->dev, &dev_attr_kcal_invert_obsolete);
 	device_remove_file(&pdev->dev, &dev_attr_kcal_sat);
 	device_remove_file(&pdev->dev, &dev_attr_kcal_hue);
 	device_remove_file(&pdev->dev, &dev_attr_kcal_val);
