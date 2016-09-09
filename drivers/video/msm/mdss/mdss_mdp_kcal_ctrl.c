@@ -249,7 +249,7 @@ static void mdss_mdp_kcal_update_pa(struct kcal_lut_data *lut_data)
 		mdss_mdp_pa_config(fb0_ctl->mfd, &pa_config, &copyback);
 	} else {
 		memset(&pa_v2_config, 0, sizeof(struct mdp_pa_v2_cfg_data));
-
+		
 		pa_v2_config.version = mdp_pa_v1_7;
 		pa_v2_config.block = MDP_LOGICAL_BLOCK_DISP_0;
 		pa_v2_config.pa_v2_data.flags = lut_data->enable ?
