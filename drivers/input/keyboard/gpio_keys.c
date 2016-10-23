@@ -348,6 +348,8 @@ static void gpio_keys_gpio_report_event(struct gpio_button_data *bdata)
 		input_event(input, type, button->code, !!state);
 	}
 	input_sync(input);
+
+	oem_check_force_dump_key(button->code,state);
 }
 
 static void gpio_keys_gpio_work_func(struct work_struct *work)
