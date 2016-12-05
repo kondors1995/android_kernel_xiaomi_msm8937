@@ -109,6 +109,8 @@ struct cpufreq_policy {
 	 */
 	struct rw_semaphore	rwsem;
 
+	unsigned int util;
+
 	/* Synchronization for frequency transitions */
 	bool			transition_ongoing; /* Tracks transition status */
 	spinlock_t		transition_lock;
