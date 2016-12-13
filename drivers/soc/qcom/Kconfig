@@ -739,6 +739,14 @@ config MSM_KERNEL_PROTECT
           without write permissions.  This protects against malicious
           devices rewriting kernel code.
 
+config ASMP
+ 	bool "Multi-core automatic hotplug support"
+ 	depends on SMP
+ 	default n
+ 	help
+ 	Automatically hotplugs the multiple cpu cores on and off
+ 	based on cpu load and suspend stat
+
           Note that this will BREAK any runtime patching of the kernel text
           (i.e. anything that uses apply_alternatives,
           aarch64_insn_patch_text_nosync, etc. including the various CPU

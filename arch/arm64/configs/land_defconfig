@@ -32,9 +32,6 @@ CONFIG_IRQ_WORK=y
 CONFIG_BUILDTIME_EXTABLE_SORT=y
 
 #
-
-
-
 # General setup
 #
 CONFIG_INIT_ENV_ARG_LIMIT=32
@@ -554,6 +551,7 @@ CONFIG_CPU_FREQ_GOV_LIONFISH=y
 CONFIG_CPU_FREQ_GOV_ZZMOOVE=y
 # CONFIG_CPUFREQ_DT is not set
 CONFIG_CPU_BOOST=y
+CONFIG_ASMP=y
 
 #
 # ARM CPU frequency scaling drivers
@@ -3624,7 +3622,6 @@ CONFIG_ION_MSM=y
 # CONFIG_DGNC is not set
 # CONFIG_DGAP is not set
 # CONFIG_GS_FPGABOOT is not set
-CONFIG_QUICK_WAKEUP=y
 
 #
 # Qualcomm Atheros Prima WLAN module
