@@ -1,0 +1,386 @@
+Changelog For Render Kernel!!
+
+R3:
+ca5f12b (HEAD -> rk-oos-r3-t8-camera, rk-oos-r3-t7-mmc) mmc: core: Fix deadlock in suspend & rescan path
+90a8456 mmc: core: add deferred resume support
+2a9bb9d mmc: core: Remove flag MMC_PM_WAKE_SDIO_IRQ in mmc_resume_host
+38e04fc mmc: core: check if CQE is already disabled before halt/unhalt
+4582766 mmc: core: Fix the timing related checks in partial_init
+342b816 mmc: mmc: fix issue with clock scaling in HS200 mode
+6924f55 mmc: core: fix reading the bkops status from card
+8bf77cb mmc: mmc: Add clk_hold/release pair before caching host->ios
+23717cb drivers: mmc: fix issue raised by source code analyzer tool
+3faa0d2 mmc: core: modify scaling up/down sequence
+e24d0ff2 mmc: core: Add NULL check for host->card
+1a57468 mmc: core: fix deadlock between runtime-suspend and devfreq
+ecbfc28 mmc: block: Add quirk and increase read data timeout for hynix emmc
+e298c07 mmc: core: postpone runtime suspend in case BKOPS is required
+e206b31 mmc: core: update AUTO_EN in BKOPS_EN field on runtime resume
+3f6f11a mmc: revert runtime idle state
+b9d0523 mmc: host: Set max frequency when disabling clock scaling
+5cd2442 mmc: core: fix issue with devfreq clock scaling
+0ced3fa mmc: core: set REL_WR_SEC_C register to 0x1 per eMMC5.0 spec
+343db0d (origin/rk-oos-r3-t6-F2FS-SDCARDFS-CORECTL, rk-oos-r3-t6-F2FS-SDCARDFS-CORECTL) Defconfig: Enable CONFIG_IP_NF_MATCH_RPFILTER & CONFIG_IP6_NF_MATCH_RPFILTER
+0a7e7f3 qcacld-2.0: Fix hdd_ocb_config_new() signature
+a94ca2f qcacld-2.0: Fix VHT-80 IBSS stops beaconing
+870a689 qcacld-2.0: Don't Tag Non-WoW packets as Runtime PM packets after wow suspend
+f141c1f Defconfig: Re-Enable CONFIG_SCHED_CORE_CTL
+1703274 Defconfig: Update for F2FS
+4cd6f54 vfs: change d_canonical_path to take two paths
+9cb3550 (origin/rk-oos-r3-t4-sdcardfs, rk-oos-r3-t4-sdcardfs) sdcardfs: Added top to sdcardfs_inode_info
+16d8eee sdcardfs: Fix locking
+4951f30 ANDROID: sdcardfs: fix itnull.cocci warnings
+8616267 sdcardfs: Truncate packages_gid.list on overflow
+7e1f6a4 sdcardfs: Add support for parsing Android's package list
+22b918e sdcardfs: Check for other cases on path lookup
+733f718 sdcardfs: override umask on mkdir and create
+e290791 sdcardfs: reserve 20MB by default
+be85153 inotify: Fix erroneous update of bit count
+dfa9e0a vfs: add d_canonical_path for stacked filesystem support
+617385c VFS: Introduce inode-getting helpers for layered/unioned fs environments
+3aa4d26 fs: sdcardfs: build fix
+a66fea5 sdcardfs: remove unneeded __init and __exit
+6ac1108 sdcardfs: Remove unused code
+df80182 sdcardfs: remove effectless config option
+1862e09b sdcardfs: Add support for d_canonicalize
+6bdab6b sdcardfs: Bring up to date with Android M permissions:
+e26cbec Changed type-casting in packagelist management
+da3c05f Port of sdcardfs to 3.18
+685ec3d Included sdcardfs source code for kernel 3.0
+1cdcda4 Revert "fs: import sdcardfs from G930FXXU1APF2"
+bcf19a9 Revert "fs: fix sdcardfs compilation errors"
+570352d Revert "sdcardfs: merge version 3.2.0"
+baf219f Revert "sdcardfs: reserve 20MB by default"
+d5e53c1 Revert "sdcardfs: replace LOOKUP_CASE_INSENSITIVE"
+9f68b09 Revert "sdcardfs: override umask on mkdir and create"
+5eebabb ext4: iterate over buffer heads correctly in move_extent_per_page()
+dca10dd ext4: fix crashes in dioread_nolock mode
+eef4f65 ext4: don't read blocks from disk after extents being swapped
+aa48bc0 ext4: move_extent improve bh vanishing success factor
+789a668 ext4: fix potential integer overflow
+7b7d3a9 ext4, jbd2: ensure entering into panic after recording an error in superblock
+f3905de ext4: fix loss of delalloc extent info in ext4_zero_range()
+f8bef63 ext4: allocate entire range in zero range
+a95c20f ext4: don't manipulate recovery flag when freezing no-journal fs
+d4284c9 Defconfig: Enable CONFIG_CRYPTO_CRC32_ARM64
+3a31a12 Defconfig: Enable CONFIG_CRYPTO_SHA256_ARM
+58a46b5 crypto: arm/sha256 - Add optimized SHA-256/224
+adfce77 sched/core: Remove false-positive warning from wake_up_process()
+a80defd msm: thermal: Add sysfs nodes to control parameters
+e8dacd2 jbd2: fix incorrect unlock on j_list_lock
+a3b7f52 eCryptfs: fixed bug in cipher handling
+ab2d2f7 eCryptfs: fixes issue where files sometimes got corrupted upon close
+9e99770 fs:fuse: Disable shortcircuit when mmap is called on a file
+e1a6c39 mm + fs: extends support for cache dropping
+a36ac00 UPSTREAM: selinux: fix bug in conditional rules handling
+853d8e5 audit: fix a double fetch in audit_log_single_execve_arg()
+b09185b md: dm-req-crypt: fixed error propagation when ICE is used
+ead98c2 block: fix use-after-free in seq file
+fdcf7d0 block: fix use-after-free in sys_ioprio_get()
+e145412 blk-mq: fix buffer overflow when reading sysfs file of 'pending'
+40ed9c8 sd: Fix maximum I/O size for BLOCK_PC requests
+90f709d blkcg: fix gendisk reference leak in blkg_conf_prep()
+d57f8d1 ext4: fix potential use after free in __ext4_journal_stop
+
+R2:
+0e82102 (HEAD -> rk-oos-m, rk-oos-r2-t3)
+51131a7 Defconfig: Enable CONFIG_SCHED_HMP_CSTATE_AWARE
+043cca6 fs/sync.c: make sync_file_range(2) use WB_SYNC_NONE writeback
+c75bae13 cpuidle: don't disable cpuidle when entering suspend
+b283120c fs: Use synchronize_rcu_expedited
+5d0aa7e Revert Some Oneplus Changes
+68e4cb7 cpufreq_stats: Disable cpu hotplug during stats table creation
+ca3da2e Makefile: Kyro's more likely closer to the A57 than to the A53
+c201cc8 sched: add sched blocked tracepoint which dumps out context of sleep.
+8da55a7 sched/fair: Prevent throttling in early pick_next_task_fair()
+bc4f834 sched: allow select_prev_cpu_us to be set to values greater than 100us
+2d6adbc sched/core: Fix TASK_DEAD race in finish_task_switch()
+71f816a sched: let sched_boost take precedence over sched_restrict_cluster_spill
+3f62337 sched: fix circular dependency of rq->lock and kswadp waitqueue lock
+7846fc2 sched: access local runqueue directly in single_task_running
+bd239fa sched: clean up idle task's mark_start restoring in init_idle()
+3ed9551 (origin/rk-oos-r2-t2) sched: qhmp_core: Fix possible hotplug race in set_cpus_allowed_ptr
+f6a2148 sched: Introduce sched_freq_aggregate_threshold tunable
+f6d29fa sched: kill unnecessary divisions on fast path
+05a5d27 sched: prevent race where update CPU cycles
+19d7680 sched: fix overflow in scaled execution time calculation
+ceb97cf sched: remove unused parameter cpu from cpu_cycles_to_freq()
+e1a7dc4 sched: core: Fix possible hotplug race in set_cpus_allowed_ptr
+eddb493 sched: fix compilation errors with !SCHED_FREQ_INPUT
+241f15c sched: fix compilation errors with !SCHED_HMP
+5fdbf63 sched: qhmp: optimize power_delta_exceeded() for !sched_enable_power_aware
+4f3d34f sched: fix potential deflated frequency estimation during IRQ handling
+6435843 sched: fix CPU frequency estimation while idle
+00fbae4 sched: preserve CPU cycle counter in rq
+7625322 Revert "sched: warn/panic upon excessive scheduling latency"
+c2ee6af Revert "sched: add scheduling latency tracking procfs node"
+751d0f9 sched: eliminate sched_early_detection_duration knob
+860a32d sched: Remove the sched heavy task frequency guidance feature
+df4d26e sched: eliminate sched_migration_fixup knob
+de571d4 sched: eliminate sched_enable_power_aware knob and parameter
+799e6c9d sched: eliminate sched_freq_account_wait_time knob
+ccb75e6 sched: eliminate sched_account_wait_time knob
+439890c sched: don't assume higher capacity means higher power in lb
+307d849 sched: Aggregate for frequency
+4c289e8 sched: simplify CPU frequency estimation and cycle counter API
+12c1d95 Revert "sched/fair: Fix fairness issue on migration"
+9ab3a97 Revert "sched/fair: Fix fairness issue on migration"
+6cdd4d8 sched: take into account of limited CPU min and max frequencies
+c8ff4b7 sched: add support for CPU frequency estimation with cycle counter
+d921c19 sched: use correct Kconfig macro name CONFIG_SCHED_HMP_CSTATE_AWARE
+3692888 sched: fix excessive task packing where CONFIG_SCHED_HMP_CSTATE_AWARE=y
+97e11dc sched: add option whether CPU C-state is used to guide task placement
+d19d062 sched: update placement logic to prefer C-state and busier CPUs
+d399bfe sched: Optimize wakeup placement logic when need_idle is set
+aa331a6 sched/fair: Fix fairness issue on migration
+144072d sched: qhmp: add a knob to restrict tasks spreading
+485b333 sched: qhmp: remove the dead code in qhmp_rt.c
+0c0c8ae sched/cputime: Fix steal_account_process_tick() to always return jiffies
+fef4e5a sched/fair: Fix fairness issue on migration
+727cd59 sched: add a knob to prefer the waker CPU to an idle CPU in waker cluster
+44a53bf sched: break the forever prev_cpu selection preference
+61b6b6f sched: Fix crash in sched_init_numa()
+7331bca sched: Fix compilation errors with !SCHED_HMP
+52e88d7 sched: inherit the group id from the group leader
+869671c sched: qhmp: fix hmp_capable detection bug in small task CPU selection
+0675c66 qos: Register irq notify after adding the qos request
+8e71cd5 qos: wake up cores based on the qos updated cpu mask
+03f8567 qos: Disable irq notifier when qos request is removed
+4a41bb4 genirq: call cancel_work_sync from irq_set_affinity_notifier
+eb4b669 clk: msm: clock-cpu-8996: round clock rates to nearest fmax frequency
+5bbdd0f ARM: dts: msm: Add support for FPC without psci for 8996
+294a6b7 lpm: Allow cpu to enter FPC from hypervisor
+cc0b96b ARM: dts: msm: Update power attributes for 8996
+12643e8 sched: Add separate load tracking histogram to predict loads
+641463a cpufreq: interactive: use mult_frac in sl_busy_to_laf
+24df52d cpufreq: interactive: Use load prediction provided by scheduler
+ee91150 cpufreq: interactive: Delay evaluation of notification by 1ms
+9b0a82a (origin/rk-oos-r2-t1, rk-oos-r2-t1) Defconfig: Disable CPUSETS
+0e12257 Build: USe new Linaro 6.2.1 Toolchain and update Makefile
+9474c6d sound: move -Os patch to soc
+7b9bc48 touchscreen: add -Ofast
+3f2f0d8 input: synaptics: s3320: elevate workqueues to high-priority
+f812390 audit: Make logging opt-in via console_loglevel
+f9bcfc2 Makefile: opt-out from 835769/843419 erratum fixes
+46f6ca4 Fix regressions from Linaro GCC 6.1.1-rc1 analysis patch
+d85cde1 Fix code errors detected using Linaro GCC 6.1.1-rc1
+3332b32 arm64: crypto: reduce priority of core AES cipher
+9b426f6 arm64/crypto: use crypto instructions to generate AES key schedule
+89136e4 arm64: crypto: increase AES interleave to 4x
+6ded03d arm64/crypto: issue aese/aesmc instructions in pairs
+deae6cd arm64: crypto: Change priority of arm64 aes cipher.
+2649d29 crypto: arm64/crc32 - bring in line with generic CRC32
+35fb653 crypto: crc32 - Add ARM64 CRC32 hw accelerated module
+d50cae8 adrenoboost: disable by default
+059b03e adrenoboost: finetuning algorithm - scale it a bit down
+7917d45 msm_adreno_tz: add adrenoboost parameter
+
+R1: 
+a19d440 (HEAD -> rk-oos-m, origin/rk-oos-r1-t13, origin/rk-oos-m, rk-oos-r1-t13) usb: dwc3-msm: Don't issue power supply change for invalid charger
+953a940 USB: dwc3: msm: Kill tasklet before disabling irq in suspend
+c8eef41 arm: dts: 15801: enable MDSS Idle Power Collapse
+0b8cce9 arm: dts: 15801: Avoid L2PC on big cluster CPUs. Picked from https://github.com/myfluxi/android_kernel_oneplus_msm8996/commit/900e66d9aa4cdcd55b3626670303a4235501e1b4
+254eddf UPSTREAM: sched: Improve load balancing in the presence of idle CPUs
+e8c2d79 cfq-iosched: fix the setting of IOPS mode on SSDs
+61b819d input: Disable Synaptics DSX drivers
+71aff93 spi: spi_qsd: Improve latencies for small transfers
+f26d42b2 PM / devfreq: Add a governor white list
+02f7825 arm: dts: 15801: Update MPM bypass list
+65a7337 arm: dts: 15801: disable LP11
+25a5097 arm: dts: 15801: Correct MPP4 behaviour
+8a68142 arm64: lib: memory utilities optimization
+bf97cdc UPSTREAM: arm64: jump labels: NOP out NOP -> NOP replacement
+4a653e9 Defconfig: Update
+bc8cde3 usb: dwc3-msm: define CONFIG_MACH_MSM8996_15801
+efa7483 usb: dwc3-msm: Remove indefinite wakeup
+8849603 gpio_keys: call oem_check_force_dump_key() later
+13d69fa gpio: Mask non-wakeup GPIO interrupts on suspend
+397deef msm: mpm: disable debugging
+84dcef7 Defconfig: CONFIG_RCU_NOCB_CPU=y & CONFIG_RCU_NOCB_CPU_ALL=y
+90638ae9 arm64: dtsi: enable ulps, partial updates and the correct roi alignment from CM
+68bdf6a Makefile: use big.Little a53/a57 flag
+7713922 Synchronize codes to OxygenOS 3.2.8.
+6c45bd9 writeback: increase bdi_min_ratio to 5 in light of the latest writeback commit.
+2c44f15 writeback: fix writeback cache thrashing
+0a6abf7 arm64: lib: improve copy_page to deal with 128 bytes at a time
+f95b72c int_sqrt: Improve 3x faster integer sqrt.
+e4a602f int_sqrt.c: Correction square root algo with naming
+082df3a Defconfig: CONFIG_WQ_POWER_EFFICIENT_DEFAULT=y
+a1ef703 msm: Use interruptible wait to not affect load average
+a34ada3 msm: Use interruptible wait to not affect load average
+a221128 msm: Fix high load average from uninterruptible waits
+bc590f3 sched: Implement lockless wake-queues
+14779e4 qcacld-2.0: Disable Tx delay in FW
+ef05bee qcacld-2.0: CL 1672988 - update fw common interface files
+05d0223 qcacld-2.0: Fix stack corruption issue in sme_RrmProcessNeighborReport
+58d1a3c qcacld-2.0: Fix compile errors when packet-log feature is disabled
+46aa03d qcacld-2.0: Disable packet log feature
+699658d qcacld-2.0: Increase multicast filter count
+aae64a13 qcacld-2.0: silence wakeup event log
+8f0c119 staging: qcacld-2.0: disable log spilling message
+6edb00a Silences WLAN, PCIe, and CPU suspend state kernel messages
+48a69b8 qcacld-2.0: Chillax the spammy logging
+65eeb3a Import qcacld-2.0 opensource LA.HB.1.3.2-32600-8x96.0
+ea303df Revert "Add qcacld-2.0 from LA.HB.1.3.1.c1-06100-8x96.0"
+f108e42 Revert "qcacld-2.0: fix build warnings"
+ba025e0 Revert "qcacld-2.0: Update to LA.HB.1.3.2-15400-8x96.0"
+8e0de0d Revert "qcacld-2.0: Chillax the spammy logging"
+a9dc30d Revert "Silences WLAN, PCIe, and CPU suspend state kernel messages"
+1aed150 Revert "qcacld-2.0: Release LA.HB.1.3.2-16800-8x96.0"
+6714416 Revert "qcacld-2.0: Update to release LA.HB.1.3.2-19000-8x96.0"
+d0c5bfd Revert "qcacld-2.0: Fix IPV6 IPA Rx property setting"
+b21febb Revert "staging: qcacld-2.0: disable log spilling message"
+416f3b3 Revert "qcacld-2.0: silence wakeup event log"
+dc78e10 Revert "qcacld-2.0: Fix set all-zero address mcast filter"
+e210f1d Revert "qcacld-2.0: Increase multicast filter count"
+18ad3f2 Revert "qcacld-2.0: Update to LA.HB.1.3.2-22100-8x96.0"
+7ce12d9 Revert "qcacld-2.0: Disable packet log feature"
+fa52f72 Revert "qcacld-2.0: Fix compile errors when packet-log feature is disabled"
+9b4429f Revert "qcacld-2.0: Fix stack corruption issue in sme_RrmProcessNeighborReport"
+0c04f32 Revert "qcacld-2.0: Discard pktlog message for invalid msdu id"
+38d0ee6 Revert "qcacld-2.0: Dont include ext caps in Assoc request if AP doesn't support"
+7850fc3 PM / devfreq: memlat: Prevent deadlock with hotplug in start_hwmon
+5d902d0 PM / devfreq: bw_hwmon: Fix race condition in polling interval update
+3849764 Defconfig: Update
+b12d8ca Defconfig: Enable SECURITY_PERF_EVENTS_RESTRICT
+da774ce perf: Fix race in swevent hash
+bbb2377 FROMLIST: security,perf: Allow further restriction of perf_event_open
+b32bf39 cgroup: prefer %pK to %p
+203bb5a3 (rk-oos-r1-t12) Defconfig: update
+830b396 net: rmnet_data: Silence "Unkown IOCTL" log spam
+1fe5ffb android: binder: Disable debug messages by default
+a223aff input: synaptics: s3320: Silence log spam
+125a9bbc power: reset: msm: Always perform warm reset
+2895764 sched: Fix cpu_active_mask/cpu_online_mask race
+f78d042 sched: panic on corrupted stack end
+c1afe0a sched: panic on corrupted stack end
+4abd0b2 perf: duplicate deletion of perf event
+0ba141b sched: restrict sync wakee placement bias with waker's demand
+49bbe71 sched: add preference for waker cluster CPU in wakee task placement
+bd7de55 trace: prevent NULL pointer dereference
+f76b3ad ANDROID: binder: Add strong ref checks
+2e01664 ANDROID: binder: Clear binder and cookie when setting handle in flat binder struct
+65486d0 android: binder: Don't use sched_preempt_enable_no_resched.
+70c17f9 android: binder: Use wake up hint for synchronous transactions.
+ce3b8f4 irqchip: Silence log spam
+2c8ae6d defconfig: msm: enable msm_power driver
+1ca51f6 ARM: dts: msm: add msm_power device for msm8996
+5ab5665 soc: qcom: msm_power: add msm_power driver
+7dd2b9e mmc: core: Add deferred resume support to CQ
+a211e85 mmc: Fix pm_notifier obeying deferred resume
+ed92d6a mmc: core: Add deferred bus resume policy.
+ac27649 cpu: Silence log spam
+78562d1 selinux: Android kernel compatibility with M userspace
+fec49fa selinux: extended permissions for ioctls
+5cdcfdc security: add ioctl specific auditing to lsm_audit
+b818fd9 selinux: remove unnecessary pointer reassignment
+6913b1c Revert "security: lsm_audit: add ioctl specific auditing"
+ddb4da2 Revert "SELinux: per-command whitelisting of ioctls"
+969ea1c Revert "SELinux: use deletion-safe iterator to free list"
+7714401 Revert "SELinux: ss: Fix policy write for ioctl operations"
+c819ed5 ARM: dts: 15801: Enable ULPS
+e98edd3 msm: qpnp-haptic: Process haptics asynchronously
+f4d45c3 power: bq27541: Silence log spam
+b197b1b power: bq27541: Don't queue work onto a specific CPU
+22bbd9b kmemleak: Remove weird OEM stuff
+1eb9fcc Defconfig: Enable CONFIG_CPUSETS
+218a748 cpuset: Make cpusets restore on hotplug
+144483a cpuset: Add allow_attach hook for cpusets on android.
+846ddce Defconfig: Disable Core Control Helper
+2ad1bd3 cpufreq: cpu-boost: Remove migration sync boost
+bbe6bf5 Disable Add Random
+4235358 disable crc check
+b9d7b9d Defconfig: CONFIG_SCHED_CORE_CTL=y
+616a27f sched: Add a knob to disable the core_ctl
+c3860c5 trace: Move core control trace events to scheduler
+81335a3 core_ctrl: Move core control into kernel
+e856528 Defconfig: Update
+86a1a53 printk: Fix OEM print wall time logic
+77963fb msm: Fix Kconfig warnings
+7588ea5 Defconfig: Update
+a0c72ef mm: remove gup_flags FOLL_WRITE games from __get_user_pages()
+6b29ea3 kgsl: convert some workqueues to use kthreads
+41d883a mdss: move to a kthread for vsync_retire_work_handler
+64ebdef proc: Remove verifiedbootstate flag from /proc/cmdline
+577758f soc: qcom: Update oneplus project_info for newer firmwares
+041374b sdcardfs: override umask on mkdir and create
+7b734a4 sdcardfs: replace LOOKUP_CASE_INSENSITIVE
+1498b06 sdcardfs: reserve 20MB by default
+2fc2157 sdcardfs: merge version 3.2.0
+6bf52af fs: fix sdcardfs compilation errors
+a1f53f3 fs: import sdcardfs from G930FXXU1APF2
+849f969 Replace %p with %pK to prevent leaking kernel address
+e6cd806 msm: msm_bus: remove the buspm module from kernel
+256c0f5 net: sch_generic: Allow devices to opt-out net watchdog
+db289d1 block: Make CFQ default to IOPS mode on SSDs
+f932fa1 msm_performance: fix big cluster value
+ff90959 msm_performance: Make input boosting optional
+4f4edd7 msm: mdss: KCAL: disable igc update
+8a7dc7d zen-iosched: change fifo_batch to 16
+728ef51 block: add zen scheduler
+5ce34b2 input: synaptics: s3320: Actually set BTN_TOOL_FINGER keybit
+0c12a6a4 leds-qpnp: Notification LED control - V1.1b
+63cb12e leds-qpnp: Notification LED control - V1.1a
+ea45daf input: synaptics: s3320: Don't run baseline on resume
+b71a781 misc: fpc1020: Ignore home key presses when touchscreen is in use
+b53ee2f input: synaptics: s1302: Stop keypad when touchscreen is in use
+9fef2c7 msm: mdss: KCAL: Send a pp display commit when changes are made
+4664441  ASoC: wcd9335: prevent speaker gain from being reset
+de455ff ASoC: wcd9335: add analog headphone gain
+afa5618 ASoC: wcd9335: fix speaker gain controls
+658aa15 ASoC: wcd9335: add mic gain and speaker gain for OnePlus3
+ce00693 ASoC: wcd9335: Sound control
+3de72b1 qpnp-haptic: Dejank the haptics
+c2e766e leds-qpnp: fix torch light and potential other LEDs being affected by notification LED control
+5c48db0 leds-qpnp: Notification LED control - V1.1
+16053c3 leds-qpnp: Notification LED control - V1
+477a83f mdss mdp: kcal for mdss_mdp_v1_7
+22c3b94 otg: enable switch
+0c5875a mdss_fb: add backlight dimmer option
+d04165e platform/msm: haptic: expose vibrate function
+7c00efd msm: qpnp-haptic: disable vibration when vmax_mv_strong is set to min
+102dfeb platform/msm: haptic: add sysfs node for vmax_mv
+b0d85c52 Allow selectable tick rate
+840e51f msm8996: Overclocking frequencies
+ef59f16 binder: prevent kptr leak by using %pK format specifier
+cea1c51 PM: devfreq: Fix simple_ondemand crashing on startup
+6b6dd46 msm: kgsl: Report correct GPU frequency in sysfs
+3f46710 PM: devfreq: Use high priority workqueue
+a7dc0e5 AIO: Don't plug the I/O queue in do_io_submit()
+16ab1c3 block, bfq: add Early Queue Merge (EQM) to BFQ-v7r8 for 3.18.0
+25ab835 block: introduce the BFQ-v7r8 I/O sched for 3.18.0
+079d5cd block: cgroups, kconfig, build bits for BFQ-v7r8-3.18.0
+9c4c22e SIO: update for linux 3.18
+5f37efd FIOPS: update for linux 3.18
+d3d4b1a Add SIO and FIOPS i/o schedulers
+5ec2790 Added fsync on/off support.
+01993f9 mm: slub: Default slub_max_order to 0
+654704c fs: Workaround the compiler's bad optimization
+8b355b6 dm-crypt: run in a WQ_HIGHPRI workqueue
+5ab292a dm-verity: run in a WQ_HIGHPRI workqueue
+9e0a7e7 mmc: move to a SCHED_FIFO thread
+59ce23a binfmt_elf.c: use get_random_int() to fix entropy depleting
+f638bd1 Fix version name
+7f2a17f arch: Unbreak mrproper/clean
+7aba921 arm64: Fix the ARM userspace build
+4a807bf qcacld-2.0: Dont include ext caps in Assoc request if AP doesn't support
+86d1e5a qcacld-2.0: Discard pktlog message for invalid msdu id
+9e5d2f7 qcacld-2.0: Fix stack corruption issue in sme_RrmProcessNeighborReport
+cdb25d0 qcacld-2.0: Fix compile errors when packet-log feature is disabled
+909f2a2 qcacld-2.0: Disable packet log feature
+5dde812 qcacld-2.0: Update to LA.HB.1.3.2-22100-8x96.0
+c7c873d qcacld-2.0: Increase multicast filter count
+8da24e0 qcacld-2.0: Fix set all-zero address mcast filter
+93bb265 qcacld-2.0: silence wakeup event log
+79b7059 staging: qcacld-2.0: disable log spilling message
+f489883 qcacld-2.0: Fix IPV6 IPA Rx property setting
+41cd84e qcacld-2.0: Update to release LA.HB.1.3.2-19000-8x96.0
+e366109 qcacld-2.0: Release LA.HB.1.3.2-16800-8x96.0
+7b53a4c Silences WLAN, PCIe, and CPU suspend state kernel messages
+499e3d9 qcacld-2.0: Chillax the spammy logging
+8566534 qcacld-2.0: Update to LA.HB.1.3.2-15400-8x96.0
+7ae87d8 qcacld-2.0: fix build warnings
+ba76ced Add qcacld-2.0 from LA.HB.1.3.1.c1-06100-8x96.0
+a957fd6 Synchronize codes to OxygenOS 3.2.6.
+d5e0e91 Fix standalone compiling
+5f9c936 Build: Stup build environment for Render Kernel
