@@ -21,7 +21,7 @@ DEFCONFIG="render_defconfig"
 
 # Kernel Details
 VER=Render-Kernel
-VARIANT="OP3-OOS"
+VARIANT="OP3-OOS-N"
 
 # Vars
 export LOCALVERSION=~`echo $VER`
