@@ -757,6 +757,7 @@
 		qcom,governor-per-policy;
 
 		qcom,cpufreq-table-0 =
+			 <  499200 >,
 			 <  960000 >,
 			 < 1094400 >,
 			 < 1209600 >,
