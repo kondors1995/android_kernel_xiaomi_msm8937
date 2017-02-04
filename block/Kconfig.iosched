@@ -43,11 +43,6 @@ config IOSCHED_CFQ
 
 	  This is the default I/O scheduler.
 
-config IOSCHED_FIOPS
-	tristate “FIOPS I/O scheduler”
-	default y
-	---help---
-	  The FIOPS I/O scheduler. WJH.
 
 config CFQ_GROUP_IOSCHED
 	bool "CFQ Group Scheduling support"
@@ -67,6 +62,14 @@ config IOSCHED_BFQ
 	  guarantee low latency to interactive and soft real-time
 	  applications. If compiled built-in (saying Y here), BFQ can
 	  be configured to support hierarchical scheduling.
+
+config IOSCHED_FIOPS
+	tristate "IOPS based I/O scheduler"
+	default y
+	---help---
+	  This is an IOPS based I/O scheduler. It will try to distribute
+          IOPS equally among all processes in the system. It's mainly for
+          Flash based storage.
 
 config CGROUP_BFQIO
 	bool "BFQ hierarchical scheduling support"
@@ -99,6 +102,8 @@ choice
 		  as desired, independently of the disk parameters and with
 		  any workload. It also tries to guarantee low latency to
 		  interactive and soft real-time applications.
+    config DEFAULT_FIOPS
+		bool "FIOPS" if IOSCHED_FIOPS=y
 
 	config DEFAULT_NOOP
 		bool "No-op"
