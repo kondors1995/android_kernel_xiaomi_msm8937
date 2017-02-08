@@ -36,7 +36,7 @@
 #include <linux/earlysuspend.h>
 #endif
 
-#define HOTPLUG_ENABLED 0
+#define HOTPLUG_ENABLED 1
 #define DEBUG 0
 #define ASMP_TAG "AutoSMP: "
 #define ASMP_STARTDELAY 20000
@@ -61,9 +61,9 @@ static struct asmp_param_struct {
 } asmp_param = {
 	.delay = 80,
 	.scroff_single_core = true,
-	.max_cpus = 8,
+	.max_cpus = 4,
 	.min_cpus = 1,
-	.cpufreq_up = 80,
+	.cpufreq_up = 85,
 	.cpufreq_down = 60,
 	.cycle_up = 1,
 	.cycle_down = 1,
