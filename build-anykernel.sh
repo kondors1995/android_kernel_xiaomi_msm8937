@@ -35,7 +35,7 @@ export CCACHE=ccache
 KERNEL_DIR=`pwd`
 REPACK_DIR="${HOME}/Android/Kernel/AnyKernel2-master/"
 PATCH_DIR="${HOME}/Android/Kernel/AnyKernel2-master//patch"
-MODULES_DIR="${HOME}/Android/Kernel/AnyKernel2-master//modules"
+MODULES_DIR="${HOME}/Android/Kernel/AnyKernel2-master/modules"
 ZIP_MOVE="${HOME}/Android/Kernel/ZIP"
 ZIMAGE_DIR="${HOME}/Android/Kernel/RED//arch/arm64/boot"
 
