@@ -20,15 +20,15 @@ KERNEL="Image.gz-dtb"
 DEFCONFIG="land_defconfig"
 
 # Kernel Details
-VER=Render-Kernel
-VARIANT="OP3-OOS-N"
+VER=SOVIET-Kernel
+VARIANT="RED-MI-3S"
 
 # Vars
 export LOCALVERSION=~`echo $VER`
 export ARCH=arm64
 export SUBARCH=arm64
 export KBUILD_BUILD_USER=NATO66613
-export KBUILD_BUILD_HOST=SOVIET
+export KBUILD_BUILD_HOST=RUSSIA
 export CCACHE=ccache
 
 # Paths
@@ -88,17 +88,17 @@ echo "Render Kernel Creation Script:"
 echo -e "${restore}"
 
 echo "Pick Toolchain..."
-select choice in LINARO-aarch64-linux-gnu-4.9.3-05012016 LINARO-aarch64-linux-gnu-5.3.1-05012016 HYPER-aarch64-6.x-10032016 UBER-aarch64-6.x.
+select choice in LINARO-aarch64-linux-gnu-4.9 LINARO-aarch64-linux-gnu-5.3.1-05012016 HYPER-aarch64-6.x-10032016 UBER-aarch64-6.x.
 do
 case "$choice" in
-	"LINARO-aarch64-linux-gnu-4.9.3-05012016")
-		export CROSS_COMPILE=${HOME}/android/source/toolchains/LINARO-aarch64-linux-gnu-4.9.3-05012016/bin/aarch64-linux-gnu-
+	"LINARO-aarch64-linux-gnu-4.9")
+		export CROSS_COMPILE=${HOME}/Android/Kernel/toolchains/LINARO-aarch64-linux-gnu-4.9/bin/aarch64-linux-gnu-
 		break;;
 	"LINARO-aarch64-linux-gnu-5.3.1-05012016")
-		export CROSS_COMPILE=${HOME}/android/source/toolchains/LINARO-aarch64-linux-gnu-5.3.1-05012016/bin/aarch64-linux-gnu-
+		export CROSS_COMPILE=${HOME}/Android/Kernel/toolchains/LINARO-aarch64-linux-gnu-5.3.1-05012016/bin/aarch64-linux-gnu-
 		break;;
 	"HYPER-aarch64-6.x-10032016")
-		export CROSS_COMPILE=${HOME}/android/source/toolchains/HYPER-aarch64-6.x-10032016/bin/aarch64-linux-android-
+		export CROSS_COMPILE=${HOME}/Android/Kernel/toolchains/HYPER-aarch64-6.x-10032016/bin/aarch64-linux-android-
 		break;;
 	"UBER-aarch64-6.x.")
 		export CROSS_COMPILE=${HOME}/Android/Kernel/toolchains/aarch64-linux-android-6.x/bin/aarch64-linux-android-
