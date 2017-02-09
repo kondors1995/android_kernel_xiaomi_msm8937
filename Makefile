@@ -404,6 +404,7 @@ KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -Werror-implicit-function-declaration \
 		   -Wno-format-security \
 		   -mcpu=cortex-a57.cortex-a53 -mtune=cortex-a57.cortex-a53 \
+			 -Wno-error=implicit-function-declaration \
 		   -std=gnu89
 
 # arter97's optimizations
