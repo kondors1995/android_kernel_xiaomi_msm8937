@@ -17,7 +17,7 @@ clear
 # Resources
 THREAD="-j$(grep -c ^processor /proc/cpuinfo)"
 KERNEL="Image.gz-dtb"
-DEFCONFIG="render_defconfig"
+DEFCONFIG="land_defconfig"
 
 # Kernel Details
 VER=Render-Kernel
@@ -27,17 +27,17 @@ VARIANT="OP3-OOS-N"
 export LOCALVERSION=~`echo $VER`
 export ARCH=arm64
 export SUBARCH=arm64
-export KBUILD_BUILD_USER=RenderBroken
-export KBUILD_BUILD_HOST=RenderServer.net
+export KBUILD_BUILD_USER=NATO66613
+export KBUILD_BUILD_HOST=SOVIET
 export CCACHE=ccache
 
 # Paths
 KERNEL_DIR=`pwd`
-REPACK_DIR="${HOME}/android/source/kernel/OP3-AnyKernel"
-PATCH_DIR="${HOME}/android/source/kernel/OP3-AnyKernel/patch"
-MODULES_DIR="${HOME}/android/source/kernel/OP3-AnyKernel/modules"
-ZIP_MOVE="${HOME}/android/source/zips/OP3-zips"
-ZIMAGE_DIR="${HOME}/android/source/kernel/OP3-kernel/arch/arm64/boot"
+REPACK_DIR="${HOME}/Android/Kernel/AnyKernel2-master/"
+PATCH_DIR="${HOME}/Android/Kernel/AnyKernel2-master//patch"
+MODULES_DIR="${HOME}/Android/Kernel/AnyKernel2-master//modules"
+ZIP_MOVE="${HOME}/Android/Kernel/ZIP"
+ZIMAGE_DIR="${HOME}/Android/Kernel/RED//arch/arm64/boot"
 
 # Functions
 function checkout_ak_branches {
@@ -88,7 +88,7 @@ echo "Render Kernel Creation Script:"
 echo -e "${restore}"
 
 echo "Pick Toolchain..."
-select choice in LINARO-aarch64-linux-gnu-4.9.3-05012016 LINARO-aarch64-linux-gnu-5.3.1-05012016 HYPER-aarch64-6.x-10032016 LINARO-aarch64-linux-gnu-6.2.1-12082016
+select choice in LINARO-aarch64-linux-gnu-4.9.3-05012016 LINARO-aarch64-linux-gnu-5.3.1-05012016 HYPER-aarch64-6.x-10032016 UBER-aarch64-linux-gnu-6.x.
 do
 case "$choice" in
 	"LINARO-aarch64-linux-gnu-4.9.3-05012016")
@@ -100,8 +100,8 @@ case "$choice" in
 	"HYPER-aarch64-6.x-10032016")
 		export CROSS_COMPILE=${HOME}/android/source/toolchains/HYPER-aarch64-6.x-10032016/bin/aarch64-linux-android-
 		break;;
-	"LINARO-aarch64-linux-gnu-6.2.1-12082016")
-		export CROSS_COMPILE=${HOME}/android/source/toolchains/LINARO-aarch64-linux-gnu-6.2.1-12082016/bin/aarch64-linux-gnu-
+	"UBER-aarch64-linux-gnu-6.x.")
+		export CROSS_COMPILE=${HOME}/Android/Kernel/toolchains/aarch64-linux-android-6.x/bin/aarch64-linux-gnu-
 		break;;
 esac
 done
