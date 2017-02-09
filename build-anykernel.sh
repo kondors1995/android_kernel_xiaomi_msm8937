@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-#  Build Script for Render Kernel for OnePlus 3!
+#  Build Script for  Kernel for OnePlus 3!
 #  Based off AK'sbuild script - Thanks!
 #
 
@@ -75,8 +75,8 @@ function make_dtb {
 
 function make_zip {
 		cd $REPACK_DIR
-		zip -r9 RenderKernel-"$VARIANT"-R.zip *
-		mv RenderKernel-"$VARIANT"-R.zip $ZIP_MOVE
+		zip -r9 SovietKerenl-"$VARIANT"-R.zip *
+		mv SovietKerenl-"$VARIANT"-R.zip $ZIP_MOVE
 		cd $KERNEL_DIR
 }
 
