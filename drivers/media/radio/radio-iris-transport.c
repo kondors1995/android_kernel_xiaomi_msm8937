@@ -50,7 +50,7 @@ static void radio_hci_smd_exit(void);
 
 static void radio_hci_smd_destruct(struct radio_hci_dev *hdev)
 {
-	radio_hci_unregister_dev(hs.hdev);
+	radio_hci_unregister_dev();
 }
 
 
@@ -172,7 +172,6 @@ static int radio_hci_smd_register_dev(struct radio_data *hsmd)
 	if (hdev == NULL)
 		return -ENODEV;
 
-	hsmd->hdev = hdev;
 	tasklet_init(&hsmd->rx_task, radio_hci_smd_recv_event,
 		(unsigned long) hsmd);
 	hdev->send  = radio_hci_smd_send_frame;
@@ -200,16 +199,13 @@ static int radio_hci_smd_register_dev(struct radio_data *hsmd)
 		return -ENODEV;
 	}
 
+	hsmd->hdev = hdev;
 	return 0;
 }
 
 static void radio_hci_smd_deregister(void)
 {
-	/* may deregistered by hcismd_fm_set_enable already */
-	if (hs.hdev == NULL)
-		return;
-
-	radio_hci_unregister_dev(hs.hdev);
+	radio_hci_unregister_dev();
 	kfree(hs.hdev);
 	hs.hdev = NULL;
 
@@ -221,6 +217,11 @@ static void radio_hci_smd_deregister(void)
 static int radio_hci_smd_init(void)
 {
 	int ret;
+
+	if (chan_opened) {
+		FMDBG("Channel is already opened");
+		return 0;
+	}
 
 	/* this should be called with fm_smd_enable lock held */
 	ret = radio_hci_smd_register_dev(&hs);
@@ -235,6 +236,11 @@ static int radio_hci_smd_init(void)
 
 static void radio_hci_smd_exit(void)
 {
+	if (!chan_opened) {
+		FMDBG("Channel already closed");
+		return;
+	}
+
 	/* this should be called with fm_smd_enable lock held */
 	radio_hci_smd_deregister();
 	chan_opened = false;
