@@ -3621,6 +3621,7 @@ CONFIG_ION_MSM=y
 # CONFIG_DGNC is not set
 # CONFIG_DGAP is not set
 # CONFIG_GS_FPGABOOT is not set
+CONFIG_QUICK_WAKEUP=y
 
 #
 # Qualcomm Atheros Prima WLAN module
