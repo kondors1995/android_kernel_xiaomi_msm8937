@@ -60,7 +60,7 @@ MODULE_VERSION(DRIVER_VERSION);
 MODULE_LICENSE("GPLv2");
 
 /* Tuneables */
-#define DT2W_DEFAULT		0
+#define DT2W_DEFAULT		2
 
 #define DT2W_PWRKEY_DUR		60
 #define DT2W_TIME		700
@@ -138,7 +138,7 @@ static void doubletap2wake_reset(void) {
 static void doubletap2wake_presspwr(struct work_struct * doubletap2wake_presspwr_work) {
 #ifdef CONFIG_PSENSOR_ONDEMAND_STATE
 	if (dtw2_psensor_state == LTR559_ON_DEMAND_COVERED) {
-	    
+
 		dtw2_psensor_state = LTR559_ON_DEMAND_RESET;
 		return;
 	}
@@ -195,7 +195,7 @@ static void new_touch(int x, int y) {
 static void detect_doubletap2wake(int x, int y, bool st)
 {
     bool single_touch = st;
-	
+
 	if (dt2w_switch < 2 && y < 1000)
         return;
 	if (dt2w_feather_w == 2)
@@ -231,7 +231,7 @@ static void detect_doubletap2wake(int x, int y, bool st)
 }
 
 static void dt2w_input_callback(struct work_struct *unused) {
-  
+
 	detect_doubletap2wake(touch_x, touch_y, true);
 
 	return;
@@ -239,7 +239,7 @@ static void dt2w_input_callback(struct work_struct *unused) {
 
 static void dt2w_input_event(struct input_handle *handle, unsigned int type,
 				unsigned int code, int value) {
-	
+
 	if (in_phone_call)
 		return;
 
