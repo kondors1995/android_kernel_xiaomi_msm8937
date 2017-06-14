@@ -1,5 +1,4 @@
 /*
- *
  * FocalTech ft5x06 TouchScreen driver.
  *
  * Copyright (c) 2010  Focal tech Ltd.
@@ -32,6 +31,9 @@
 #include <linux/proc_fs.h>
 #include <linux/fs.h>
 #include <asm/uaccess.h>
+#ifdef CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE
+#include <linux/input/doubletap2wake.h>
+#endif
 
 #if CTP_CHARGER_DETECT
 #include <linux/power_supply.h>
@@ -398,6 +400,10 @@ static irqreturn_t ft5x06_ts_interrupt(int irq, void *dev_id)
 
 		if (y == 2000) {
 
+			#ifdef CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE
+			if(dt2w_switch && dt2w_scr_suspended) return IRQ_HANDLED;
+			#endif
+
 			y = 1344;
 
 			switch (x) {
@@ -446,8 +452,9 @@ static int ft5x06_power_on(struct ft5x06_ts_data *data, bool on)
 {
 	int rc;
 
-	if (!on)
+	if (!on) {
 		goto power_off;
+	}
 
 	rc = regulator_enable(data->vdd);
 	if (rc) {
@@ -582,51 +589,59 @@ static int ft5x06_ts_pinctrl_select(struct ft5x06_ts_data *ft5x06_data, bool on)
 static int ft5x06_ts_suspend(struct device *dev)
 {
 	struct ft5x06_ts_data *data = dev_get_drvdata(dev);
-	char txbuf[2], i;
 	int err;
 
-	if (data->loading_fw) {
-		dev_info(dev, "Firmware loading in process...\n");
-		return 0;
-	}
+	#ifdef CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE
+	if(!dt2w_switch || in_phone_call){
+	#endif
+		char txbuf[2], i;
 
-	if (data->suspended) {
-		dev_info(dev, "Already in suspend state\n");
-		return 0;
-	}
-
-	disable_irq(data->client->irq);
-
-	/* release all touches */
-	for (i = 0; i < data->pdata->num_max_touches; i++) {
-		input_mt_slot(data->input_dev, i);
-		input_mt_report_slot_state(data->input_dev, MT_TOOL_FINGER, 0);
-	}
-	input_mt_report_pointer_emulation(data->input_dev, false);
-	input_sync(data->input_dev);
-
-	if (gpio_is_valid(data->pdata->reset_gpio)) {
-		txbuf[0] = FT_REG_PMODE;
-		txbuf[1] = FT_PMODE_HIBERNATE;
-		err = ft5x06_i2c_write(data->client, txbuf, sizeof(txbuf));
-		msleep(data->pdata->hard_rst_dly);
-	}
-
-	if (data->pdata->power_on) {
-		err = data->pdata->power_on(false);
-		if (err) {
-			dev_err(dev, "power off failed");
-			goto pwr_off_fail;
+		if (data->loading_fw) {
+			dev_info(dev, "Firmware loading in process...\n");
+			return 0;
 		}
-	} else {
-		err = ft5x06_power_on(data, false);
-		if (err) {
-			dev_err(dev, "power off failed");
-			goto pwr_off_fail;
-		}
-	}
 
-	data->suspended = true;
+		if (data->suspended) {
+			dev_info(dev, "Already in suspend state\n");
+			return 0;
+		}
+
+		disable_irq(data->client->irq);
+
+		/* release all touches */
+		for (i = 0; i < data->pdata->num_max_touches; i++) {
+			input_mt_slot(data->input_dev, i);
+			input_mt_report_slot_state(data->input_dev, MT_TOOL_FINGER, 0);
+		}
+		input_mt_report_pointer_emulation(data->input_dev, false);
+		input_sync(data->input_dev);
+
+		if (gpio_is_valid(data->pdata->reset_gpio)) {
+			txbuf[0] = FT_REG_PMODE;
+			txbuf[1] = FT_PMODE_HIBERNATE;
+			err = ft5x06_i2c_write(data->client, txbuf, sizeof(txbuf));
+			msleep(data->pdata->hard_rst_dly);
+		}
+
+		if (data->pdata->power_on) {
+			err = data->pdata->power_on(false);
+			if (err) {
+				dev_err(dev, "power off failed");
+				goto pwr_off_fail;
+			}
+		} else {
+			err = ft5x06_power_on(data, false);
+			if (err) {
+				dev_err(dev, "power off failed");
+				goto pwr_off_fail;
+			}
+		}
+
+		data->suspended = true;
+	#ifdef CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE
+	}
+	#endif
+
 
 	return 0;
 
@@ -644,57 +659,58 @@ pwr_off_fail:
 static int ft5x06_ts_resume(struct device *dev)
 {
 	struct ft5x06_ts_data *data = dev_get_drvdata(dev);
-	int err;
 
-	if (!data->suspended) {
-		dev_dbg(dev, "Already in awake state\n");
-		return 0;
-	}
+		int err;
 
-	if (data->pdata->power_on) {
-		err = data->pdata->power_on(true);
-		if (err) {
-			dev_err(dev, "power on failed");
-			return err;
+		if (!data->suspended) {
+			dev_dbg(dev, "Already in awake state\n");
+			return 0;
 		}
-	} else {
-		err = ft5x06_power_on(data, true);
-		if (err) {
-			dev_err(dev, "power on failed");
-			return err;
-		}
-	}
 
-	if (gpio_is_valid(data->pdata->reset_gpio)) {
-		gpio_set_value_cansleep(data->pdata->reset_gpio, 0);
-		msleep(data->pdata->hard_rst_dly);
-		gpio_set_value_cansleep(data->pdata->reset_gpio, 1);
-	}
-
-	msleep(data->pdata->soft_rst_dly);
-
-	enable_irq(data->client->irq);
-
-#if CTP_CHARGER_DETECT
-	batt_psy = power_supply_get_by_name("usb");
-	if (!batt_psy)
-		CTP_ERROR("tp resume battery supply not found\n");
-	else {
-		is_charger_plug =
-		    (u8) power_supply_get_battery_charge_state(batt_psy);
-
-		CTP_DEBUG("is_charger_plug %d, prev %d", is_charger_plug,
-			  pre_charger_status);
-		if (is_charger_plug) {
-			ft5x0x_write_reg(update_client, 0x8B, 1);
+		if (data->pdata->power_on) {
+			err = data->pdata->power_on(true);
+			if (err) {
+				dev_err(dev, "power on failed");
+				return err;
+			}
 		} else {
-			ft5x0x_write_reg(update_client, 0x8B, 0);
+			err = ft5x06_power_on(data, true);
+			if (err) {
+				dev_err(dev, "power on failed");
+				return err;
+			}
 		}
-	}
-	pre_charger_status = is_charger_plug;
-#endif
 
-	data->suspended = false;
+		if (gpio_is_valid(data->pdata->reset_gpio)) {
+			gpio_set_value_cansleep(data->pdata->reset_gpio, 0);
+			msleep(data->pdata->hard_rst_dly);
+			gpio_set_value_cansleep(data->pdata->reset_gpio, 1);
+		}
+
+		msleep(data->pdata->soft_rst_dly);
+
+		enable_irq(data->client->irq);
+
+		#if CTP_CHARGER_DETECT
+		batt_psy = power_supply_get_by_name("usb");
+		if (!batt_psy)
+			CTP_ERROR("tp resume battery supply not found\n");
+		else {
+			is_charger_plug =
+				(u8) power_supply_get_battery_charge_state(batt_psy);
+
+			CTP_DEBUG("is_charger_plug %d, prev %d", is_charger_plug,
+				  pre_charger_status);
+			if (is_charger_plug) {
+				ft5x0x_write_reg(update_client, 0x8B, 1);
+			} else {
+				ft5x0x_write_reg(update_client, 0x8B, 0);
+			}
+		}
+		pre_charger_status = is_charger_plug;
+		#endif
+
+		data->suspended = false;
 
 	return 0;
 }
@@ -739,11 +755,18 @@ static int fb_notifier_callback(struct notifier_block *self,
 	if (evdata && evdata->data && event == FB_EVENT_BLANK &&
 	    ft5x06_data && ft5x06_data->client) {
 		blank = evdata->data;
-		if (*blank == FB_BLANK_UNBLANK)
+		if (*blank == FB_BLANK_UNBLANK) {
 			schedule_work(&ft5x06_data->fb_notify_work);
+			#ifdef CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE
+			dt2w_scr_suspended = false;
+			#endif
+		}
 		else if (*blank == FB_BLANK_POWERDOWN) {
 			flush_work(&ft5x06_data->fb_notify_work);
 			ft5x06_ts_suspend(&ft5x06_data->client->dev);
+			#ifdef CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE
+			dt2w_scr_suspended = true;
+			#endif
 		}
 	}
 
